@@ -1,0 +1,59 @@
+#!/bin/bash
+
+# Print help / script usage
+function help()
+{
+  echo "usage: dotrcfiles <command>"
+  echo "available commands are:"
+  echo -e "\tadd <file>\n\t\tAdd a file to tracked files"
+  echo -e "\t\tIt must be in your \$HOME or one of its sub-folder"
+  echo -e "\thelp\n\t\tPrint help"
+}
+
+# Handle call with wrong command
+function wrong_command()
+{
+  echo "dotrcfiles - unknown command: '${1}'"
+  help
+}
+
+# Add a file to tracked files
+function add()
+{
+  file=${1}
+  absoluteFile="$(cd $(dirname ${1}); pwd -P)/$(basename ${1})"
+  homeRelatedFile=`echo $absoluteFile | sed "s#$HOME/#./#"`
+
+  # Check for required argument
+  if [ -z file ]
+  then
+    echo "dotrcfiles - add - missing argument"
+    help
+    return
+  fi
+
+  # Check if file is in $HOME
+  if [ $absoluteFile = $homeRelatedFile ]
+  then
+    echo "dotrcfiles - add - file is not in your \$HOME or one of its sub-folder"
+    return
+  fi
+
+  # Check if file is not already tracked
+  if [ -f $homeRelatedFile ]
+  then
+    echo "dotrcfiles - add - file is already tracked"
+    return
+  fi
+
+  # All good, add the file
+  ln $absoluteFile $homeRelatedFile
+}
+
+# Handle command argument
+case "$1" in
+  add) add $2;;
+  help) help;;
+  *) wrong_command $1;;
+esac
+
