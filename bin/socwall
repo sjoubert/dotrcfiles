@@ -1,0 +1,82 @@
+#!/bin/bash
+
+# Locations
+SOCWALL_DIR=$HOME/.config/socwall
+DB_FILE=$SOCWALL_DIR/db.txt
+TMP_FILE=$SOCWALL_DIR/randomWallpaper.tmp
+JPG_FILE=$SOCWALL_DIR/randomWallpaper.jpg
+
+# Update socwall database
+function db()
+{
+  echo "socwall - updating database"
+
+  # Get html file
+  wget "http://www.socwall.com/views/images/wallpapers/" -O - | \
+  # Keep lines containing relevant URLs
+  grep "/icons/image2.gif" | \
+  # Keep only URLs
+  cut -d \" -f 8 | \
+  # Ensure it is a JPEG file
+  grep ".jpg" > $DB_FILE
+
+  # Images are duplicated, keep the second URL which has the best size
+  sed -i -e "1~2d" $DB_FILE
+}
+
+# Change current wallpaper
+function up()
+{
+  echo "socwall - changing wallpaper"
+
+  # Get number of wallpapers
+  MAX_FILE=`wc -l $DB_FILE | cut -d" " -f1`
+
+  # Choose a random wallpaper
+  RANDOM_ID=$(($RANDOM % $MAX_FILE))
+  echo $RANDOM_ID
+
+  # Get wallpaper URL from database
+  NEW_FILE=`sed -e "$RANDOM_ID ! d" $DB_FILE`
+
+  # Download new file
+  wget "http://www.socwall.com/views/images/wallpapers/$NEW_FILE" -O $TMP_FILE
+
+  # Set new wallpaper if download succeeded
+  SIZE=`du -b $TMP_FILE | cut -f 1`
+  if [ $SIZE -ne 0 ]; then
+    cp $TMP_FILE $JPG_FILE
+    echo "socwall - new wallpaper set"
+  else
+    echo "socwall - wallpaper download failed, no new wallpaper set"
+  fi
+
+  # Clean temporary file
+  rm $TMP_FILE
+}
+
+# Print help / script usage
+function help()
+{
+  echo "usage: socwall <command>"
+  echo "available commands are:"
+  echo -e "\tdb\tUpdate the images database"
+  echo -e "\tup\tUpdate current wallpaper"
+  echo -e "\thelp\tPrint help"
+}
+
+# Handle call with wrong command
+function wrong_command()
+{
+  echo "socwall - unknown command: '${1}'"
+  help
+}
+
+# Handle command argument
+case "$1" in
+  db) db;;
+  up) up;;
+  help) help;;
+  *) wrong_command $1;;
+esac
+
