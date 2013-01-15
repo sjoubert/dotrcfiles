@@ -60,6 +60,7 @@ function sync()
   # Remove old files and link to the new ones
   for f in $files
   do
+    echo "dotrcfiles - sync - $f"
     rm -f $HOME/$f
     ln $f $HOME/$f
   done
