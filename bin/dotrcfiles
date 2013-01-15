@@ -48,6 +48,11 @@ function add()
   fi
 
   # All good, add the file
+  echo "dotrcfiles - add - $absoluteFile"
+  if [ ! -x $(dirname $homeRelatedFile) ]
+  then
+    mkdir -p $(dirname $homeRelatedFile)
+  fi
   ln $absoluteFile $homeRelatedFile
 }
 
@@ -62,6 +67,10 @@ function sync()
   do
     echo "dotrcfiles - sync - $f"
     rm -f $HOME/$f
+    if [ ! -x $(dirname $f) ]
+    then
+      mkdir -p $(dirname $f)
+    fi
     ln $f $HOME/$f
   done
 }
