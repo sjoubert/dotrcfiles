@@ -1,36 +1,37 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+#!/bin/bash
 
 # If not running interactively, don't do anything
-[ -z "$PS1" ] && return
+# See bash documentation about $-
+case $- in
+  *i*) ;;
+  *) return;;
+esac
 
-# don't put duplicate lines in the history. See bash(1) for more options
-# ... or force ignoredups and ignorespace
-HISTCONTROL=ignoredups:ignorespace
-
-# append to the history file, don't overwrite it
+# Don't put duplicate lines in the history
+HISTCONTROL=ignoredups
+# Append to the history file, don't overwrite it
 shopt -s histappend
-
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+# Set history length
 HISTSIZE=1000
 HISTFILESIZE=2000
+# Set history file
+HISTFILE=~/.config/bash/history
 
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
+# Check the window size after each command and, if necessary, update the values
+# of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# make less more friendly for non-text input files, see lesspipe(1)
+# Make less more friendly for non-text input files
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
+  debian_chroot=$(cat /etc/debian_chroot)
 fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    xterm-color) color_prompt=yes;;
+  xterm-color) color_prompt=yes;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
@@ -50,9 +51,9 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 # Colors
-if [ -f ~/.bash_colors ];
+if [ -f ~/.config/bash/colors ];
 then
-  . ~/.bash_colors
+  . ~/.config/bash/colors
 fi
 
 # Git informations
@@ -85,15 +86,15 @@ xterm*|rxvt*)
 esac
 
 # Exports
-if [ -f ~/.bash_exports ];
+if [ -f ~/.config/bash/exports ];
 then
-  . ~/.bash_exports
+  . ~/.config/bash/exports
 fi
 
 # Aliases
-if [ -f ~/.bash_aliases ];
+if [ -f ~/.config/bash/aliases ];
 then
-  . ~/.bash_aliases
+  . ~/.config/bash/aliases
 fi
 
 # Completion
