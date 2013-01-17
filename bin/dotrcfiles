@@ -60,7 +60,7 @@ function add()
 function sync()
 {
   # List tracked files
-  files=`find . -type f | grep -v .git | grep -v README.md`
+  files=`find . -type f | grep -v "\.git" | grep -v README.md`
 
   # Remove old files and link to the new ones
   for f in $files
