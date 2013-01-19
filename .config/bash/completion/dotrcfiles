@@ -1,0 +1,15 @@
+#!/bin/bash
+
+function _dotrcfiles()
+{
+  local current="${COMP_WORDS[COMP_CWORD]}"
+  local previous="${COMP_WORDS[COMP_CWORD-1]}"
+
+  case $previous in
+    dotrcfiles) COMPREPLY=(`compgen -W "add sync help" -- $current`) ;;
+    add) COMPREPLY=(`compgen -f -- $current`) ;;
+    *) COMPREPLY=() ;;
+  esac
+}
+
+complete -o filenames -F _dotrcfiles dotrcfiles

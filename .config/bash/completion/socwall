@@ -1,0 +1,14 @@
+#!/bin/bash
+
+function _socwall()
+{
+  local current="${COMP_WORDS[COMP_CWORD]}"
+  local previous="${COMP_WORDS[COMP_CWORD-1]}"
+
+  case $previous in
+    socwall) COMPREPLY=(`compgen -W "db up help" -- $current`) ;;
+    *) COMPREPLY=();;
+  esac
+}
+
+complete -F _socwall socwall
