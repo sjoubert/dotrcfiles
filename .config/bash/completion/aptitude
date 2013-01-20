@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Fallback on aptitude completion for 'sa'
+if [ -r /usr/share/bash-completion/completions/aptitude ]
+then
+  . /usr/share/bash-completion/completions/aptitude
+  `complete -p aptitude | sed 's/ aptitude$//'` sa
+else
+  echo "Error: cannot read /usr/share/bash-completion/completions/aptitude"
+fi
+
+# List available packages for 'sai'
+# Adapted from /usr/share/bash-completion/completions/aptitude
+function _sai()
+{
+  local current="${COMP_WORDS[COMP_CWORD]}"
+  local previous="${COMP_WORDS[COMP_CWORD-1]}"
+
+  case $previous in
+    sai) COMPREPLY=(`apt-cache pkgnames $current 2> /dev/null`) ;;
+    *) COMPREPLY=() ;;
+  esac
+}
+complete -F _sai sai
+
+# List installed packages for 'sar'
+# Adapted from /usr/share/bash-completion/completions/aptitude
+function _sar()
+{
+  local current="${COMP_WORDS[COMP_CWORD]}"
+  local previous="${COMP_WORDS[COMP_CWORD-1]}"
+
+  case $previous in
+    sar) COMPREPLY=(`dpkg -l "$current*" | grep ii | cut -d' ' -f3 | cut -d: -f1`) ;;
+    *) COMPREPLY=() ;;
+  esac
+}
+complete -F _sar sar
