@@ -23,5 +23,6 @@ alias sar='sudo aptitude remove'
 
 # dev
 alias makej='make -j$(($CPU_COUNT - 1))'
+alias ctestj='ctest -j$(($CPU_COUNT - 1))'
 alias gdb='gdb -q'
 
