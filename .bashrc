@@ -36,7 +36,7 @@ then
   debian_chroot=$(cat /etc/debian_chroot)
 fi
 # Set prompt
-PS1="\n${debian_chroot:+($debian_chroot)}$YELLOW\u$NC@$RED\h$NC:$BLUE\w$GREEN$GIT_STATUS$NC\$ "
+PS1="\n${debian_chroot:+($debian_chroot)}$YELLOW\u$NC@$RED\h$NC:$BLUE\w$GREEN\$(git_status)$NC\$ "
 # If this is an xterm set the window title
 case "$TERM" in
   xterm*|rxvt*) PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1" ;;

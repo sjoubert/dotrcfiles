@@ -1,15 +1,57 @@
 #!/bin/bash
 
-function parse_git_branch
+function git_status()
 {
-  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+  # Not a git repo, exit
+  local notGit=`git status 2>&1 | grep 'fatal: Not a git repository'`
+  [ -n "$notGit" ] && return
+
+  # Set branch
+  local branch
+  local inBranch=`git status | grep '^# On branch'`
+  local noBranch=`git status | grep '^# Not currently on any branch'`
+  if [ -n "$inBranch" ]
+  then
+    branch=`echo $inBranch | sed 's/^# On branch //'`
+  elif [ -n "$noBranch" ]
+  then
+    branch=`git rev-parse --short HEAD`
+  else
+    branch="branch error"
+  fi
+
+  # Set remote status
+  local remote
+  local yourBranch=`git status | grep '# Your branch'`
+  local ahead=`echo $yourBranch | grep 'ahead'`
+  local behind=`echo $yourBranch | grep 'behind'`
+  local diverged=`echo $yourBranch | grep 'diverged'`
+  if [ -z "$yourBranch" ]
+  then
+    remote=""
+  elif [ -n "$ahead" ]
+  then
+    remote="↑"
+  elif [ -n "$behind" ]
+  then
+    remote="↓"
+  elif [ -n "$diverged" ]
+  then
+    remote="Y"
+  else
+    remote="remote error"
+  fi
+
+  # Set working copy status
+  local workingTree
+  local conflicts=`git status --porcelain | grep '^(U.|.U|AA|DD)' | wc -l`
+  local staged=`git status --porcelain | grep '^[MADRC][ MD]' | grep -v '^DD'`
+  local modified=`git status --porcelain | grep '^[ MARD][MD]'`
+  local untracked=`git status --porcelain | grep '^??'`
+  [ "$conflicts" -gt 0 ] && workingTree+="⚡$conflicts"
+  [ -n "$staged" ] && workingTree+="+"
+  [ -n "$modified" ] && workingTree+="*"
+  [ -n "$untracked" ] && workingTree+="…"
+
+  echo -n "($branch)$remote$workingTree"
 }
-
-function parse_git_status
-{
-  notclean=`git status --porcelain 2> /dev/null | grep -E "^.(??|M|A|D|R|C|U)" | wc -l`
-
-  if [[ $notclean -gt 0 ]]; then echo -n "*"; fi
-}
-
-GIT_STATUS="\$(parse_git_branch)\$(parse_git_status)"
