@@ -44,7 +44,7 @@ function git_status()
 
   # Set working copy status
   local workingTree
-  local conflicts=`git status --porcelain | grep '^(U.|.U|AA|DD)' | wc -l`
+  local conflicts=`git status --porcelain | grep '^\(U.\|.U\|AA\|DD\)' | wc -l`
   local staged=`git status --porcelain | grep '^[MADRC][ MD]' | grep -v '^DD'`
   local modified=`git status --porcelain | grep '^[ MARD][MD]'`
   local untracked=`git status --porcelain | grep '^??'`
