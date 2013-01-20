@@ -55,10 +55,7 @@ then
   . /etc/bash_completion
 fi
 # Personal completion
-if [ -d ~/.config/bash/completion ] && ! shopt -oq posix
+if [ -f ~/.config/bash/completion ] && ! shopt -oq posix
 then
-  for f in `ls ~/.config/bash/completion`
-  do
-    . ~/.config/bash/completion/$f
-  done
+  . ~/.config/bash/completion
 fi
