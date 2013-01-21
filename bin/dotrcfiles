@@ -67,9 +67,9 @@ function sync()
   do
     echo "dotrcfiles - sync - $f"
     rm -f $HOME/$f
-    if [ ! -x $(dirname $f) ]
+    if [ ! -x $(dirname $HOME/$f) ]
     then
-      mkdir -p $(dirname $f)
+      mkdir -p $(dirname $HOME/$f)
     fi
     ln $f $HOME/$f
   done
