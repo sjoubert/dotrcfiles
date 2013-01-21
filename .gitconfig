@@ -1,0 +1,9 @@
+[color]
+  ui = auto
+[alias]
+  st = status
+  ci = commit
+  co = checkout
+  up = svn rebase
+  dci = svn dcommit
+
