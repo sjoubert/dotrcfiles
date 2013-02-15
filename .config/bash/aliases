@@ -21,6 +21,11 @@ alias sasg='sudo aptitude safe-upgrade'
 alias safg='sudo aptitude full-upgrade'
 alias sar='sudo aptitude remove'
 
+# tar
+alias targz='tar -czf'
+alias tarlist='tar -tf'
+alias untargz='tar -xzf'
+
 # dev
 alias makej='make -j$(($CPU_COUNT - 1))'
 alias ctestj='ctest -j$(($CPU_COUNT - 1))'
