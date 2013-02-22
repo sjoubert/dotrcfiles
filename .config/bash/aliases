@@ -15,6 +15,8 @@ alias la='ls -lhA'
 # aptitude
 alias sa='sudo aptitude'
 alias aps='aptitude search'
+alias apo='aptitude show'
+alias apv='aptitude versions'
 alias sai='sudo aptitude install'
 alias sau='sudo aptitude update'
 alias sasg='sudo aptitude safe-upgrade'

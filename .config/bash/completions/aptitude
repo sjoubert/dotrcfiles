@@ -9,14 +9,16 @@ else
   echo "Error: cannot read /usr/share/bash-completion/completions/aptitude"
 fi
 
-# List available packages for 'sai'
+# List available packages for 'sai', 'apo' and 'apv'
 # Adapted from /usr/share/bash-completion/completions/aptitude
-function _sai()
+function _availablePackages()
 {
   local current="${COMP_WORDS[COMP_CWORD]}"
   COMPREPLY=(`apt-cache pkgnames $current 2> /dev/null`)
 }
-complete -F _sai sai
+complete -F _availablePackages sai
+complete -F _availablePackages apo
+complete -F _availablePackages apv
 
 # List installed packages for 'sar'
 # Adapted from /usr/share/bash-completion/completions/aptitude
