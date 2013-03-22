@@ -1,0 +1,4 @@
+#!/bin/sh
+
+git log -1 --pretty=format:"%C(yellow)%h %Cgreen%H%Creset"
+
