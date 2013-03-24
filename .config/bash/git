@@ -6,6 +6,12 @@ function git_status()
   local notGit=`git status 2>&1 | grep 'fatal: Not a git repository'`
   [ -n "$notGit" ] && return
 
+  # Case we are in the .git directory
+  while [ -n "`git status 2>&1 | grep 'fatal: This operation must be run in a work tree'`" ]
+  do
+    cd ..
+  done
+
   # Set branch
   local branch
   local inBranch=`git status | grep '^# On branch'`
