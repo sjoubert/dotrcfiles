@@ -1,29 +1,28 @@
 #!/bin/bash
 
 # Print help / script usage
-function help()
+function help() #---------------------------------------------------------------
 {
   echo "usage: dotrcfiles <command>"
   echo "available commands are:"
   echo -e "\tadd <file>\n\t\tAdd a file to tracked files"
   echo -e "\t\tIt must be in your \$HOME or one of its sub-folder"
-  echo -e "\tsync\n\t\tSynchronized tracked files between repository and used locations"
+  echo -e "\tsync\n\t\tSynchronized tracked files between repository and \$HOME"
   echo -e "\thelp\n\t\tPrint help"
 }
 
 # Handle call with wrong command
-function wrong_command()
+function wrong_command() #------------------------------------------------------
 {
   echo "dotrcfiles - unknown command: '${1}'"
   help
 }
 
 # Add a file to tracked files
-function add()
+function add() #----------------------------------------------------------------
 {
+  # File to add
   file=${1}
-  absoluteFile="$(cd $(dirname ${1}); pwd -P)/$(basename ${1})"
-  homeRelatedFile=`echo $absoluteFile | sed "s#$HOME/#./#"`
 
   # Check for required argument
   if [ -z file ]
@@ -33,50 +32,69 @@ function add()
     return
   fi
 
-  # Check if file is in $HOME
-  if [ $absoluteFile = $homeRelatedFile ]
+  # Absolute file path of the file to add
+  homeFilePath="$(cd $(dirname ${1}); pwd -P)/$(basename ${1})"
+  # Relative (to $HOME) file path of the file to add
+  repoFilePath=`echo $homeFilePath | sed "s#$HOME#$(pwd)#"`
+
+  # Check if file to add is in $HOME
+  if [ $homeFilePath = $repoFilePath ]
   then
     echo "dotrcfiles - add - file is not in your \$HOME or one of its sub-folder"
     return
   fi
 
   # Check if file is not already tracked
-  if [ -f $homeRelatedFile ]
+  if [ -f $repoFilePath ]
   then
     echo "dotrcfiles - add - file is already tracked"
     return
   fi
 
   # All good, add the file
-  echo "dotrcfiles - add - $absoluteFile"
-  if [ ! -x $(dirname $homeRelatedFile) ]
+  echo "dotrcfiles - add - $homeFilePath"
+  # Create directory if needed
+  if [ ! -x $(dirname $repoFilePath) ]
   then
-    mkdir -p $(dirname $homeRelatedFile)
+    mkdir -p $(dirname $repoFilePath)
   fi
-  ln $absoluteFile $homeRelatedFile
+  # Move file into repository then create symlink
+  mv $homeFilePath $repoFilePath
+  ln -s $repoFilePath $homeFilePath
 }
 
 # Synchronized tracked files between repository and used locations
-function sync()
+function sync() #---------------------------------------------------------------
 {
-  # List tracked files
-  files=`find . -type f | grep -v "\.git/" | grep -v README.md`
+  # List tracked files omitting specific files
+  files=`find . -type f | grep -v "\.git/" | grep -v README.md | sed "s#\./##g"`
 
-  # Remove old files and link to the new ones
+  # Update all files
   for f in $files
   do
-    echo "dotrcfiles - sync - $f"
-    rm -f $HOME/$f
-    if [ ! -x $(dirname $HOME/$f) ]
+    echo -n "dotrcfiles - sync - "
+
+    homeFilePath=$HOME/$f
+    repoFilePath=`pwd`/$f
+
+    if [ ! -f $homeFilePath ] # New file
     then
-      mkdir -p $(dirname $HOME/$f)
+      echo "N $f"
+      ln -s $repoFilePath $homeFilePath
+    elif [ -L $homeFilePath -a $homeFilePath -ef $repoFilePath ] # Up-to-date
+    then
+      echo "U $f"
+    else # Overwriting file after backup
+      echo "O $f"
+      mkdir -p backup/`dirname $f`
+      mv $homeFilePath backup/$f
+      ln -s $repoFilePath $homeFilePath
     fi
-    ln $f $HOME/$f
   done
 }
 
 # Handle command argument
-case "$1" in
+case "$1" in #------------------------------------------------------------------
   add) add $2;;
   sync) sync;;
   help) help;;
