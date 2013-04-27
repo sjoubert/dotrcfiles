@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Personal binaries
-export PATH=$PATH:$HOME/bin
-
 # Add ccache before other compiler so that it's the one taken
 export PATH=/usr/lib/ccache/:$PATH
 
