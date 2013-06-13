@@ -9,7 +9,3 @@ then
   done
 fi
 
-# cmake, ctest and cpack completion
-[ -r /usr/share/cmake-2.8/completions/cmake ] && . /usr/share/cmake-2.8/completions/cmake
-[ -r /usr/share/cmake-2.8/completions/ctest ] && . /usr/share/cmake-2.8/completions/ctest
-[ -r /usr/share/cmake-2.8/completions/cpack ] && . /usr/share/cmake-2.8/completions/cpack
