@@ -4,7 +4,7 @@
 export PATH=/usr/lib/ccache/:$PATH
 
 # Set CPU number
-export CPU_COUNT=`grep -i processor /proc/cpuinfo | wc -l`
+export CPU_COUNT=`nproc`
 
 export EDITOR=vim
 export XML_CATALOGS_FILES=/etc/xml/catalog
