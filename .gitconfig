@@ -8,3 +8,6 @@
   dci = svn dcommit
 [grep]
   lineNumber = true
+[svn]
+  rmdir = true
+
