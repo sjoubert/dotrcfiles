@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Call standard ccache script
+echo "Updating standard ccache symlinks"
+sudo update-ccache-symlinks
+
+# Add clang symlinks
+cd /usr/lib/ccache
+echo "Adding clang symlink"
+sudo ln -s ../../bin/ccache clang
+echo "Adding clang++ symlink"
+sudo ln -s ../../bin/ccache clang++
+
