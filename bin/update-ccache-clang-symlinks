@@ -4,10 +4,16 @@
 echo "Updating standard ccache symlinks"
 sudo update-ccache-symlinks
 
-# Add clang symlinks
+# Add clang symlinks (only in clang is installed)
 cd /usr/lib/ccache
-echo "Adding clang symlink"
-sudo ln -s ../../bin/ccache clang
-echo "Adding clang++ symlink"
-sudo ln -s ../../bin/ccache clang++
+if [ `which clang` ]
+then
+  echo "Adding clang symlink"
+  sudo ln -s ../../bin/ccache clang
+fi
+if [ `which clang++` ]
+then
+  echo "Adding clang++ symlink"
+  sudo ln -s ../../bin/ccache clang++
+fi
 
