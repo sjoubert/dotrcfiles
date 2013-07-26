@@ -8,3 +8,9 @@ export CPU_COUNT=`nproc`
 
 export EDITOR=vim
 export XML_CATALOGS_FILES=/etc/xml/catalog
+
+# Use most as pager (especially for man display) if available
+if [ `which most` ]
+then
+  export PAGER=most
+fi
