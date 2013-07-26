@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Test for color support
+if [ -x /usr/bin/tput ] && [ `tput colors` -ge 8 ]
+then
+  # Style
+  color_bold="\[$(tput bold)\]"
+  color_underline="\[$(tput smul)\]"
+  # Foreground color
+  color_fblue="\[$(tput setaf 0)\]"
+  color_fred="\[$(tput setaf 1)\]"
+  color_fgreen="\[$(tput setaf 2)\]"
+  color_fyellow="\[$(tput setaf 3)\]"
+  color_fblue="\[$(tput setaf 4)\]"
+  color_fpurple="\[$(tput setaf 5)\]"
+  color_fcyan="\[$(tput setaf 6)\]"
+  color_fwhite="\[$(tput setaf 7)\]"
+  # Background color
+  color_bblue="\[$(tput setab 0)\]"
+  color_bred="\[$(tput setab 1)\]"
+  color_bgreen="\[$(tput setab 2)\]"
+  color_byellow="\[$(tput setab 3)\]"
+  color_bblue="\[$(tput setab 4)\]"
+  color_bpurple="\[$(tput setab 5)\]"
+  color_bcyan="\[$(tput setab 6)\]"
+  color_bwhite="\[$(tput setab 7)\]"
+  # Clear
+  color_clear="\[$(tput sgr0)\]"
+fi

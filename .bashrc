@@ -24,8 +24,8 @@ shopt -s checkwinsize
 # Make less more friendly for non-text input files
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# Colors
-[ -f ~/.config/bash/colors ] && . ~/.config/bash/colors
+# Fancy stuff like colors, bold and underline markers for terminal
+[ -f ~/.config/bash/fancy ] && . ~/.config/bash/fancy
 
 # Git information
 [ -f ~/.config/bash/git ] && . ~/.config/bash/git
@@ -36,7 +36,12 @@ then
   debian_chroot=$(cat /etc/debian_chroot)
 fi
 # Set prompt
-PS1="\n\${?##0}${debian_chroot:+($debian_chroot)}$YELLOW\u$NC@$RED\h$NC:$BLUE\w$GREEN\$(git_status)$NC\$ "
+PS1="\n$color_bold$color_bred\${?##0}$color_clear" # New line and exit code
+PS1="$PS1${debian_chroot:+($debian_chroot)}" # Chroot information
+PS1="$PS1$color_bold$color_fyellow\u$color_clear@" # Username
+PS1="$PS1$color_bold$color_fred\h$color_clear:" # Hostname
+PS1="$PS1$color_bold$color_fblue\w$color_clear" # Working directory
+PS1="$PS1$color_bold$color_fgreen\$(git_status)$color_clear\$ " # Git prompt
 # If this is an xterm set the window title
 case "$TERM" in
   xterm*|rxvt*) PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1" ;;
