@@ -1,3 +1,5 @@
+[core]
+  pager = less
 [color]
   ui = auto
 [alias]
