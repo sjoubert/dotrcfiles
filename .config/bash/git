@@ -1,63 +1,68 @@
 #!/bin/bash
 
-function git_status()
+function git_prompt()
 {
-  # Not a git repo, exit
-  local notGit=`git status 2>&1 | grep 'fatal: Not a git repository'`
-  [ -n "$notGit" ] && return
+  ## Get some information on the repository
+  local repoInfo
+  repoInfo=`git rev-parse --git-dir \
+    --is-bare-repository \
+    --abbrev-ref --symbolic-full-name HEAD 2>/dev/null`
+  local repoInfoExitCode="$?"
+  # Not a repository, exit
+  [ "$repoInfoExitCode" != "0" ] && return
+  # Parse information
+  local localInfo="${repoInfo##*$'\n'}"
+  repoInfo="${repoInfo%$'\n'*}"
+  local bareRepo="${repoInfo##*$'\n'}"
+  repoInfo="${repoInfo%$'\n'*}"
+  local gitDir="${repoInfo##*$'\n'}"
 
-  # Case we are in the .git directory
-  while [ -n "`git status 2>&1 | grep 'fatal: This operation must be run in a work tree'`" ]
-  do
-    cd ..
-  done
+  ## Check local information (current branch name or commit hash)
+  [ "$localInfo" = "HEAD" ] && localInfo=`git rev-parse --short HEAD`
 
-  # Set branch
-  local branch
-  local inBranch=`git status | grep '^# On branch'`
-  local noBranch=`git status | grep '^# Not currently on any branch'`
-  if [ -n "$inBranch" ]
+  ## Get information relative to tracking branch (if one)
+  # Get information
+  local tracking=`git rev-list --left-right HEAD...HEAD@{upstream} 2>/dev/null`
+  # Parse tracking
+  local aheadOrLocalBranch=`echo "$tracking" | grep -c '^<'`
+  local behindOrTrackingBranch=`echo $tracking | grep -c '^>'`
+  # Build tracking display
+  local trackingInfo
+  if [ "$aheadOrLocalBranch" -eq 0 -a "$behindOrTrackingBranch" -eq 0 ]
   then
-    branch=`echo $inBranch | sed 's/^# On branch //'`
-  elif [ -n "$noBranch" ]
+    trackingInfo=""
+  elif [ "$aheadOrLocalBranch" -gt 0 -a "$behindOrTrackingBranch" -gt 0 ]
   then
-    branch=`git rev-parse --short HEAD`
-  else
-    branch="branch error"
+    trackingInfo="${aheadOrLocalBranch}Y$behindOrTrackingBranch"
+  elif [ "$aheadOrLocalBranch" -gt 0 ]
+  then
+    trackingInfo="↑$aheadOrLocalBranch"
+  elif [ "$behindOrTrackingBranch" -gt 0 ]
+  then
+    trackingInfo="↓$behindOrTrackingBranch"
   fi
 
-  # Set remote status
-  local remote
-  local yourBranch=`git status | grep '# Your branch'`
-  local ahead=`echo $yourBranch | grep 'ahead'`
-  local behind=`echo $yourBranch | grep 'behind'`
-  local diverged=`echo $yourBranch | grep 'diverged'`
-  if [ -z "$yourBranch" ]
+  ## Get work tree status (if not a bare repo)
+  if [ "$bareRepo" = "false" ]
   then
-    remote=""
-  elif [ -n "$ahead" ]
-  then
-    remote="↑"
-  elif [ -n "$behind" ]
-  then
-    remote="↓"
-  elif [ -n "$diverged" ]
-  then
-    remote="Y"
-  else
-    remote="remote error"
+    # Moving to work tree (to handle .git location)
+    # assuming it is not a separate repository
+    cd "$gitDir/.."
+    # Get status
+    local status=`git status --porcelain`
+    # Parse status
+    local conflicts=`echo "$status" | grep -c '^\(U.\|.U\|AA\|DD\)'`
+    local staged=`echo "$status" | grep '^[MADRC][ MD]' | grep -c -v '^DD'`
+    local modified=`echo "$status" | grep -c '^[ MARD][MD]'`
+    local untracked=`echo "$status" | grep -c '^??'`
+    # Build work tree display
+    local workingTree
+    [ "$conflicts" -gt 0 ] && workingTree+="⚡$conflicts"
+    [ "$staged" -gt 0 ] && workingTree+="+"
+    [ "$modified" -gt 0 ] && workingTree+="*"
+    [ "$untracked" -gt 0 ] && workingTree+="…"
   fi
 
-  # Set working copy status
-  local workingTree
-  local conflicts=`git status --porcelain | grep '^\(U.\|.U\|AA\|DD\)' | wc -l`
-  local staged=`git status --porcelain | grep '^[MADRC][ MD]' | grep -v '^DD'`
-  local modified=`git status --porcelain | grep '^[ MARD][MD]'`
-  local untracked=`git status --porcelain | grep '^??'`
-  [ "$conflicts" -gt 0 ] && workingTree+="⚡$conflicts"
-  [ -n "$staged" ] && workingTree+="+"
-  [ -n "$modified" ] && workingTree+="*"
-  [ -n "$untracked" ] && workingTree+="…"
-
-  echo -n "($branch)$remote$workingTree"
+  ## Aggregate and display the result
+  echo -n "($localInfo)$trackingInfo$workingTree"
 }
