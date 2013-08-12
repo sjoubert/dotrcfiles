@@ -25,7 +25,7 @@ function git_prompt()
   local tracking=`git rev-list --left-right HEAD...HEAD@{upstream} 2>/dev/null`
   # Parse tracking
   local aheadOrLocalBranch=`echo "$tracking" | grep -c '^<'`
-  local behindOrTrackingBranch=`echo $tracking | grep -c '^>'`
+  local behindOrTrackingBranch=`echo "$tracking" | grep -c '^>'`
   # Build tracking display
   local trackingInfo
   if [ "$aheadOrLocalBranch" -eq 0 -a "$behindOrTrackingBranch" -eq 0 ]
