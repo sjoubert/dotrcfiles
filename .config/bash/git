@@ -2,6 +2,9 @@
 
 function git_prompt()
 {
+  ## Git is required
+  [ `which git` ] || return
+
   ## Get some information on the repository
   local repoInfo
   repoInfo=`git rev-parse --git-dir \
