@@ -7,18 +7,21 @@ function git_prompt()
 
   ## Get some information on the repository
   local repoInfo
-  repoInfo=`git rev-parse --git-dir \
+  repoInfo=`git rev-parse --is-inside-git-dir \
+    --git-dir \
     --is-bare-repository \
     --abbrev-ref --symbolic-full-name HEAD 2>/dev/null`
   local repoInfoExitCode="$?"
   # Not a repository, exit
   [ "$repoInfoExitCode" != "0" ] && return
-  # Parse information
+  # Parse information (reverse order of invocation in git-rev-parse)
   local localInfo="${repoInfo##*$'\n'}"
   repoInfo="${repoInfo%$'\n'*}"
   local bareRepo="${repoInfo##*$'\n'}"
   repoInfo="${repoInfo%$'\n'*}"
   local gitDir="${repoInfo##*$'\n'}"
+  repoInfo="${repoInfo%$'\n'*}"
+  local insideGitDir="${repoInfo##*$'\n'}"
 
   ## Get local information
   # Git identification, current branch name or commit hash
@@ -55,9 +58,9 @@ function git_prompt()
   ## Get work tree status (if not a bare repo)
   if [ "$bareRepo" = "false" ]
   then
-    # Moving to work tree (to handle .git location)
-    # assuming it is not a separate repository
-    cd "$gitDir/.."
+    # Git status only work in a work tree
+    # If we're in a .git folder, assume its parent is a work tree
+    [ "$insideGitDir" = "true" ] && cd "$gitDir/.."
     # Get status
     local status=`git status --porcelain`
     # Parse status
