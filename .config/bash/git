@@ -20,8 +20,15 @@ function git_prompt()
   repoInfo="${repoInfo%$'\n'*}"
   local gitDir="${repoInfo##*$'\n'}"
 
-  ## Check local information (current branch name or commit hash)
+  ## Get local information
+  # Git identification, current branch name or commit hash
   [ "$localInfo" = "HEAD" ] && localInfo=`git rev-parse --short HEAD`
+  # SVN revision if git-svn is available, if it is a git-svn repo
+  # and if the HEAD commit has a revision number (not a local one)
+  local revisionNumber
+  [ -x "$(git --exec-path)/git-svn" ] && [ -d $gitDir/svn ] && \
+    revisionNumber=`git svn find-rev HEAD`
+  [ "$revisionNumber" != "" ] && localInfo="$localInfo/r$revisionNumber"
 
   ## Get information relative to tracking branch (if one)
   # Get information
