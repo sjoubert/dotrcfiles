@@ -31,7 +31,7 @@ function git_prompt()
   local revisionNumber
   [ -x "$(git --exec-path)/git-svn" ] && [ -d $gitDir/svn ] && \
     revisionNumber=`git svn find-rev HEAD`
-  [ "$revisionNumber" != "" ] && localInfo="$localInfo/r$revisionNumber"
+  [ "$revisionNumber" != "" ] && localInfo="$localInfo@$revisionNumber"
 
   ## Get information relative to tracking branch (if one)
   # Get information
