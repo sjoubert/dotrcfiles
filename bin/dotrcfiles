@@ -77,7 +77,7 @@ function sync() #---------------------------------------------------------------
     homeFilePath=$HOME/$f
     repoFilePath=`pwd`/$f
 
-    if [ ! -f $homeFilePath ] # New file
+    if [ ! -e $homeFilePath -a ! -L $homeFilePath ] # New file
     then
       echo "N $f"
       ln -s $repoFilePath $homeFilePath
