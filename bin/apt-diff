@@ -1,0 +1,70 @@
+#!/bin/sh
+
+# Dependencies: aptitude and grep
+[ `which aptitude` ] || echo "Aptitude required, please install it."
+[ `which grep` ] || echo "Aptitude required, please install it."
+
+# Arguments
+colorArg=""
+while getopts "hca:" option
+do
+  case  $option in
+    a) baseArchive=$OPTARG ;;
+    c) colorArg="--color" ;;
+    h)
+      echo "Usage: $0 [-h] [-c] -a oldstable|stable|testing|unstable|experimental"
+      echo "\t-h\tPrint this help message"
+      echo "\t-c\tEnable color mode, manually installed packages are highlighted"
+      echo "\t-a\tSpecify the base archive for the diff"
+      exit 0
+      ;;
+  esac
+done
+
+# Check arguments
+if [ "$baseArchive" != "oldstable" \
+  -a "$baseArchive" != "stable" \
+  -a "$baseArchive" != "testing" \
+  -a "$baseArchive" != "unstable" \
+  -a "$baseArchive" != "experimental" ]
+then
+  echo "Available values for mandatory archive (-a) option are: oldstable, stable, testing, unstable, experimental"
+  exit 1
+fi
+
+# Packages comming from stable
+if [ "$baseArchive" = "oldstable" ]
+then
+  echo "Stable:"
+  aptitude search "?any-version(~i ~A^stable$ ?not(~A^oldstable$))" | grep $colorArg -E "^i   .*$|$"
+  echo ""
+fi
+
+# Packages comming from testing
+if [ "$baseArchive" = "oldstable" -o "$baseArchive" = "stable" ]
+then
+  echo "Testing:"
+  aptitude search "?any-version(~i ~A^testing$ ?not(~A^oldstable$) ?not(~A^stable$))" | grep $colorArg -E "^i   .*$|$"
+  echo ""
+fi
+
+# Packages comming from unstable
+if [ "$baseArchive" = "oldstable" -o "$baseArchive" = "stable" -o "$baseArchive" = "testing" ]
+then
+  echo "Unstable:"
+  aptitude search "?any-version(~i ~A^unstable$ ?not(~A^oldstable$) ?not(~A^stable$) ?not(~A^testing$))" | grep $colorArg -E "^i   .*$|$"
+  echo ""
+fi
+
+# Packages comming from experimental
+if [ "$baseArchive" = "oldstable" -o "$baseArchive" = "stable" -o "$baseArchive" = "testing" -o "$baseArchive" = "unstable" ]
+then
+  echo "Experimental:"
+  aptitude search "?any-version(~i ~A^experimental$ ?not(~A^oldstable$) ?not(~A^stable$) ?not(~A^testing$) ?not(~A^unstable$))" | grep $colorArg -E "^i   .*$|$"
+  echo ""
+fi
+
+# Packages not comming from any archive
+# Either not anymore downloadble or user installed
+echo "Dangling:"
+aptitude search "?any-version(~i ?not(~A^oldstable$) ?not(~A^stable$) ?not(~A^testing$) ?not(~A^unstable$) ?not(~A^experimental$))" | grep $colorArg -E "^i   .*$|$"
