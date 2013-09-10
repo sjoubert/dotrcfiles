@@ -1,0 +1,14 @@
+#!/bin/bash
+
+function _aptdiff()
+{
+  local current="${COMP_WORDS[COMP_CWORD]}"
+  local previous="${COMP_WORDS[COMP_CWORD-1]}"
+
+  case $previous in
+    -a) COMPREPLY=(`compgen -W "oldstable stable testing unstable experimental" -- $current`) ;;
+    *) COMPREPLY=(`compgen -W "-h -c -a" -- $current`) ;;
+  esac
+}
+
+complete -F _aptdiff apt-diff
