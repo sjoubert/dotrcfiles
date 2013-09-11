@@ -32,4 +32,5 @@ alias untargz='tar -xzf'
 alias makej='make -j$(($CPU_COUNT - 1))'
 alias ctestj='ctest -j$(($CPU_COUNT - 1))'
 alias gdb='gdb -q'
+alias git='LC_ALL=C git'
 
