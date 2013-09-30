@@ -50,9 +50,11 @@ esac
 
 # Exports
 [ -f ~/.config/bash/exports ] && . ~/.config/bash/exports
+[ -f ~/.config/bash/exports.local ] && . ~/.config/bash/exports.local
 
 # Aliases
 [ -f ~/.config/bash/aliases ] && . ~/.config/bash/aliases
+[ -f ~/.config/bash/aliases.local ] && . ~/.config/bash/aliases.local
 
 # Default completion
 if [ -f /etc/bash_completion ] && ! shopt -oq posix
