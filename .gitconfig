@@ -6,7 +6,6 @@
   st = status
   ci = commit
   co = checkout
-  up = svn rebase
   dci = svn dcommit
 [grep]
   lineNumber = true
