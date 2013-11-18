@@ -1,5 +1,4 @@
 #!/bin/sh
 
-git svn fetch
-git svn rebase -l
+git svn fetch && git svn rebase -l
 
