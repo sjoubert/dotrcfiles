@@ -3,13 +3,24 @@
 # Locations
 SOCWALL_DIR=$HOME/.config/socwall
 DB_FILE=$SOCWALL_DIR/db.txt
-TMP_FILE=$SOCWALL_DIR/randomWallpaper.tmp
-JPG_FILE=$SOCWALL_DIR/randomWallpaper.jpg
+SOCWALL_IMG_DIR=$SOCWALL_DIR/images
+TMP_FILE=$SOCWALL_IMG_DIR/randomWallpaper.tmp
+JPG_FILE=$SOCWALL_IMG_DIR/randomWallpaper.jpg
+
+# Check locations on filesystem
+function check_filesystem()
+{
+  mkdir -p "$SOCWALL_DIR"
+  mkdir -p "$SOCWALL_IMG_DIR"
+}
 
 # Update socwall database
 function db()
 {
   echo "socwall - updating database"
+
+  # Check location
+  check_filesystem
 
   # Get html file
   wget "http://www.socwall.com/views/images/wallpapers/" -O - | \
@@ -28,6 +39,9 @@ function db()
 function up()
 {
   echo "socwall - changing wallpaper"
+
+  # Check location
+  check_filesystem
 
   # Get number of wallpapers
   MAX_FILE=`wc -l $DB_FILE | cut -d" " -f1`
