@@ -30,7 +30,7 @@ function git_prompt()
   # and if the HEAD commit has a revision number (not a local one)
   local revisionNumber
   [ -x "$(git --exec-path)/git-svn" ] && [ -d $gitDir/svn ] && \
-    revisionNumber=`git svn find-rev HEAD`
+    revisionNumber=`setsid git svn find-rev HEAD`
   [ "$revisionNumber" != "" ] && localInfo="$localInfo@$revisionNumber"
 
   ## Get information relative to tracking branch (if one)
