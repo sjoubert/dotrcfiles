@@ -7,7 +7,7 @@ then
   color_bold="\[$(tput bold)\]"
   color_underline="\[$(tput smul)\]"
   # Foreground color
-  color_fblue="\[$(tput setaf 0)\]"
+  color_fblack="\[$(tput setaf 0)\]"
   color_fred="\[$(tput setaf 1)\]"
   color_fgreen="\[$(tput setaf 2)\]"
   color_fyellow="\[$(tput setaf 3)\]"
@@ -16,7 +16,7 @@ then
   color_fcyan="\[$(tput setaf 6)\]"
   color_fwhite="\[$(tput setaf 7)\]"
   # Background color
-  color_bblue="\[$(tput setab 0)\]"
+  color_bblack="\[$(tput setab 0)\]"
   color_bred="\[$(tput setab 1)\]"
   color_bgreen="\[$(tput setab 2)\]"
   color_byellow="\[$(tput setab 3)\]"
