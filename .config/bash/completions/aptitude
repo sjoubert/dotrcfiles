@@ -4,7 +4,7 @@
 if [ -r /usr/share/bash-completion/completions/aptitude ]
 then
   . /usr/share/bash-completion/completions/aptitude
-  `complete -p aptitude | sed 's/ aptitude$//'` sa
+  eval "`complete -p aptitude | sed 's/ aptitude$//'` sa"
 else
   echo "Error: cannot read /usr/share/bash-completion/completions/aptitude"
 fi
