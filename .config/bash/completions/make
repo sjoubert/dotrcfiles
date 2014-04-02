@@ -3,5 +3,5 @@
 if [ -r /usr/share/bash-completion/completions/make ]
 then
   . /usr/share/bash-completion/completions/make
-  `complete -p make | sed 's/ make$//'` makej
+  eval "`complete -p make | sed 's/ make$//'` makej"
 fi

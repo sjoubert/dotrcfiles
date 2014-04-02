@@ -3,5 +3,5 @@
 if [ -r /usr/share/cmake-2.8/completions/ctest ]
 then
   . /usr/share/cmake-2.8/completions/ctest
-  `complete -p ctest | sed 's/ ctest$//'` ctestj
+  eval "`complete -p ctest | sed 's/ ctest$//'` ctestj"
 fi
