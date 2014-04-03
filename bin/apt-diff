@@ -1,8 +1,8 @@
 #!/bin/sh
 
 # Dependencies: aptitude and grep
-[ `which aptitude` ] || echo "Aptitude required, please install it."
-[ `which grep` ] || echo "Aptitude required, please install it."
+[ `which aptitude` ] || echo "Aptitude is required, please install it."
+[ `which grep` ] || echo "Grep is required, please install it."
 
 # Arguments
 colorArg=""
@@ -21,7 +21,7 @@ do
   esac
 done
 
-# Check arguments
+# Check archive argument values
 if [ "$baseArchive" != "oldstable" \
   -a "$baseArchive" != "stable" \
   -a "$baseArchive" != "testing" \
