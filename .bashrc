@@ -30,6 +30,9 @@ shopt -s checkwinsize
 # Git information
 [ -f ~/.config/bash/git ] && . ~/.config/bash/git
 
+# SVN information
+[ -f ~/.config/bash/svn ] && . ~/.config/bash/svn
+
 # Set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]
 then
@@ -41,7 +44,8 @@ PS1="$PS1${debian_chroot:+($debian_chroot)}" # Chroot information
 PS1="$PS1$color_bold$color_fyellow\u$color_clear@" # Username
 PS1="$PS1$color_bold$color_fred\h$color_clear:" # Hostname
 PS1="$PS1$color_bold$color_fblue\w$color_clear" # Working directory
-PS1="$PS1$color_bold$color_fgreen\$(git_prompt)$color_clear\$ " # Git prompt
+PS1="$PS1$color_bold$color_fgreen\$(git_prompt)$color_clear" # Git prompt
+PS1="$PS1$color_bold$color_fgreen\$(svn_prompt)$color_clear\$ " # SVN prompt
 # If this is an xterm set the window title
 case "$TERM" in
   xterm*|rxvt*) PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1" ;;

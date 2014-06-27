@@ -1,0 +1,29 @@
+#!/bin/bash
+
+function svn_prompt()
+{
+  ## SVN is required
+  [ `which svn` ] || return
+
+  ## Check repository existence and get revision
+  local revision=`LC_ALL=C svn info 2>/dev/null | grep Revision | cut -f2 -d' '`
+  [ "$revision" ] || return
+
+  ## Get working copy status
+  # Move to root directory to get status on the whole repo, like git does
+  local rootPath=`LC_ALL=C svn info | grep "Working Copy Root Path" | cut -f2 -d:`
+  # Get status
+  local status=`LC_ALL=C svn status $rootPath`
+  # Parse status
+  local conflicts=`echo "$status" | grep -c '^.{0,1,6}C'`
+  local modified=`echo "$status" | grep -c '^[^ ?C]'`
+  local untracked=`echo "$status" | grep -c '^?'`
+  # Build work tree display
+  local workingTree
+  [ "$conflicts" -gt 0 ] && workingTree+="⚡$conflicts"
+  [ "$modified" -gt 0 ] && workingTree+="*"
+  [ "$untracked" -gt 0 ] && workingTree+="…"
+
+  ## Aggregate and display the result
+  echo -n "(r$revision)$workingTree"
+}
