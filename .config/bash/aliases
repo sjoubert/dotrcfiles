@@ -29,7 +29,10 @@ alias tarlist='tar -tf'
 alias untargz='tar -xzf'
 
 # dev
-alias makej='make -j$(($CPU_COUNT - 1))'
-alias ctestj='ctest -j$(($CPU_COUNT - 1))'
+if [ $CPU_COUNT -gt 1 ]
+then
+  alias makej='make -j$(($CPU_COUNT - 1))'
+  alias ctestj='ctest -j$(($CPU_COUNT - 1))'
+fi
 alias gdb='gdb -q'
 alias git='LC_ALL=C git'
