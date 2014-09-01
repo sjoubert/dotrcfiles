@@ -80,6 +80,7 @@ function sync() #---------------------------------------------------------------
     if [ ! -e $homeFilePath -a ! -L $homeFilePath ] # New file
     then
       echo "N $f"
+      mkdir -p `dirname $homeFilePath`
       ln -s $repoFilePath $homeFilePath
     elif [ -L $homeFilePath -a $homeFilePath -ef $repoFilePath ] # Up-to-date
     then
