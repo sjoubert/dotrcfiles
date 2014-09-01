@@ -45,7 +45,14 @@ PS1="$PS1$color_bold$color_fyellow\u$color_clear@" # Username
 PS1="$PS1$color_bold$color_fred\h$color_clear:" # Hostname
 PS1="$PS1$color_bold$color_fblue\w$color_clear" # Working directory
 PS1="$PS1$color_bold$color_fgreen\$(git_prompt)$color_clear" # Git prompt
-PS1="$PS1$color_bold$color_fgreen\$(svn_prompt)$color_clear\$ " # SVN prompt
+PS1="$PS1$color_bold$color_fgreen\$(svn_prompt)$color_clear" # SVN prompt
+if [ $USER = "root" ]
+then
+  PS1="$PS1$color_bold$color_bred$color_fwhite#$color_clear " # Root
+else
+  PS1="$PS1\$ " # Standard user
+fi
+
 # If this is an xterm set the window title
 case "$TERM" in
   xterm*|rxvt*) PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1" ;;
