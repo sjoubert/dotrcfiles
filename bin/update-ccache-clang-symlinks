@@ -1,19 +1,29 @@
 #!/bin/sh
 
-# Call standard ccache script
+## Call standard ccache script
 echo "Updating standard ccache symlinks"
 sudo update-ccache-symlinks
 
-# Add clang symlinks (only in clang is installed)
-cd /usr/lib/ccache
-if [ `which clang` ]
-then
-  echo "Adding clang symlink"
-  sudo ln -s ../../bin/ccache clang
-fi
-if [ `which clang++` ]
-then
-  echo "Adding clang++ symlink"
-  sudo ln -s ../../bin/ccache clang++
-fi
+## Add clang support
+# Build compiler names
+compilerNames="clang clang++"
+compilerVersions=`ls /usr/lib/clang`
+for name in $compilerNames
+do
+  candidates="$candidates $name"
+  for version in $compilerVersions
+  do
+    candidates="$candidates $name-$version"
+  done
+done
 
+# Add symlinks
+cd /usr/lib/ccache
+for candidate in $candidates
+do
+  if [ `which $candidate` ]
+  then
+    echo "Adding $candidate symlink"
+    sudo ln -s ../../bin/ccache $candidate
+  fi
+done
