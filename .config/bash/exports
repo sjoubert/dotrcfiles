@@ -13,14 +13,14 @@ useCcache=`which cc | grep ccache`
 useClang=`update-alternatives --query cc | grep "^Value" | grep clang`
 if [ -n "$useCcache" -a -n "$useClang" ]
 then
-  export CFLAGS="$CFLAGS -Qunused-arguments"
+  export CFLAGS="$CFLAGS -Qunused-arguments -fcolor-diagnostics"
 fi
 # C++ compiler
 useCcache=`which c++ | grep ccache`
 useClang=`update-alternatives --query c++ | grep "^Value" | grep clang`
 if [ -n "$useCcache" -a -n "$useClang" ]
 then
-  export CXXFLAGS="$CXXFLAGS -Qunused-arguments"
+  export CXXFLAGS="$CXXFLAGS -Qunused-arguments -fcolor-diagnostics"
 fi
 # Clean variables
 unset useCcache useClang
