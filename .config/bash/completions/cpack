@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -r /usr/share/cmake-2.8/completions/cpack ]
+if [ -r /etc/bash_completion.d/cpack ]
 then
-  . /usr/share/cmake-2.8/completions/cpack
+  . /etc/bash_completion.d/cpack
 fi

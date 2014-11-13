@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -r /usr/share/cmake-2.8/completions/cmake ]
+if [ -r /etc/bash_completion.d/cmake ]
 then
-  . /usr/share/cmake-2.8/completions/cmake
+  . /etc/bash_completion.d/cmake
 fi
