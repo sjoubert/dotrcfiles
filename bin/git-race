@@ -1,4 +1,4 @@
 #!/bin/sh
 
-git shortlog -ns | cat -n
+git shortlog -ns --all | cat -n
 
