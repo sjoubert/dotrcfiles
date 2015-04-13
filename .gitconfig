@@ -6,7 +6,6 @@
   st = status
   ci = commit
   co = checkout
-  dci = svn dcommit
   diffw = diff --word-diff=color
 [grep]
   lineNumber = true

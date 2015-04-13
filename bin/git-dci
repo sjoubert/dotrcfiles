@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Action
+if [ -z "$(git log --grep=WIP @{u}..HEAD)" ]
+then
+  git svn dcommit
+else
+  echo "Trying to push a WIP commit, aborting"
+fi
