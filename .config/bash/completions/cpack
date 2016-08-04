@@ -1,6 +1,0 @@
-#!/bin/bash
-
-if [ -r /etc/bash_completion.d/cpack ]
-then
-  . /etc/bash_completion.d/cpack
-fi
