@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Dependencies: aptitude and grep
 [ `which aptitude` ] || echo "Aptitude is required, please install it."
@@ -32,11 +32,14 @@ then
   exit 1
 fi
 
+nonAutoRegex="^i   .*$|$"
+columns=80
+
 # Packages comming from stable
 if [ "$baseArchive" = "oldstable" ]
 then
   echo "Stable:"
-  aptitude search "?any-version(~i ~A^stable$ ?not(~A^oldstable$))" | grep $colorArg -E "^i   .*$|$"
+  aptitude search -w$columns "?any-version(~i ~A^stable$ ?not(~A^oldstable$))" | grep $colorArg -E "$nonAutoRegex"
   echo ""
 fi
 
@@ -44,7 +47,7 @@ fi
 if [ "$baseArchive" = "oldstable" -o "$baseArchive" = "stable" ]
 then
   echo "Testing:"
-  aptitude search "?any-version(~i ~A^testing$ ?not(~A^oldstable$) ?not(~A^stable$))" | grep $colorArg -E "^i   .*$|$"
+  aptitude search -w$columns "?any-version(~i ~A^testing$ ?not(~A^oldstable$) ?not(~A^stable$))" | grep $colorArg -E "$nonAutoRegex"
   echo ""
 fi
 
@@ -52,7 +55,7 @@ fi
 if [ "$baseArchive" = "oldstable" -o "$baseArchive" = "stable" -o "$baseArchive" = "testing" ]
 then
   echo "Unstable:"
-  aptitude search "?any-version(~i ~A^unstable$ ?not(~A^oldstable$) ?not(~A^stable$) ?not(~A^testing$))" | grep $colorArg -E "^i   .*$|$"
+  aptitude search -w$columns "?any-version(~i ~A^unstable$ ?not(~A^oldstable$) ?not(~A^stable$) ?not(~A^testing$))" | grep $colorArg -E "$nonAutoRegex"
   echo ""
 fi
 
@@ -60,11 +63,11 @@ fi
 if [ "$baseArchive" = "oldstable" -o "$baseArchive" = "stable" -o "$baseArchive" = "testing" -o "$baseArchive" = "unstable" ]
 then
   echo "Experimental:"
-  aptitude search "?any-version(~i ~A^experimental$ ?not(~A^oldstable$) ?not(~A^stable$) ?not(~A^testing$) ?not(~A^unstable$))" | grep $colorArg -E "^i   .*$|$"
+  aptitude search -w$columns "?any-version(~i ~A^experimental$ ?not(~A^oldstable$) ?not(~A^stable$) ?not(~A^testing$) ?not(~A^unstable$))" | grep $colorArg -E "$nonAutoRegex"
   echo ""
 fi
 
 # Packages not comming from any archive
 # Either not anymore downloadble or user installed
 echo "Dangling:"
-aptitude search "?any-version(~i ?not(~A^oldstable$) ?not(~A^stable$) ?not(~A^testing$) ?not(~A^unstable$) ?not(~A^experimental$))" | grep $colorArg -E "^i   .*$|$"
+aptitude search -w$columns "?any-version(~i ?not(~A^oldstable$) ?not(~A^stable$) ?not(~A^testing$) ?not(~A^unstable$) ?not(~A^experimental$))" | grep $colorArg -E "$nonAutoRegex"
