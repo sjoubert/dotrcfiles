@@ -11,3 +11,5 @@
   lineNumber = true
 [svn]
   rmdir = true
+[pull]
+  rebase = true
