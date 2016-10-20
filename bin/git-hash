@@ -1,4 +1,4 @@
 #!/bin/sh
 
-git log -1 --pretty=format:"%C(yellow)%h %Cgreen%H%Creset"
-
+commitNumber=$(git rev-list --count HEAD)
+git log -1 --pretty=format:"%C(magenta)$commitNumber %C(cyan)$commitNumber.%h %C(yellow)%h %Cgreen%H%Creset"
