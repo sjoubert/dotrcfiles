@@ -1,4 +1,10 @@
 #!/bin/sh
 
-commitNumber=$(git rev-list --count HEAD)
-git log -1 --pretty=format:"%C(magenta)$commitNumber %C(cyan)$commitNumber.%h %C(yellow)%h %Cgreen%H%Creset"
+refspec=$1
+if [ -z $refspec]
+then
+  refspec=HEAD
+fi
+
+commitNumber=$(git rev-list --count $refspec)
+git log -1 --pretty=format:"%C(magenta)$commitNumber %C(cyan)$commitNumber.%h %C(yellow)%h %Cgreen%H%Creset" $refspec
