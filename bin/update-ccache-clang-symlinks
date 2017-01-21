@@ -5,25 +5,26 @@ echo "Updating standard ccache symlinks"
 sudo update-ccache-symlinks
 
 ## Add clang support
-# Build compiler names
-compilerNames="clang clang++"
+cd /usr/lib/ccache
 compilerVersions=`ls /usr/lib/clang`
-for name in $compilerNames
+for name in clang clang++
 do
-  candidates="$candidates $name"
   for version in $compilerVersions
   do
-    candidates="$candidates $name-$version"
+    candidate=$name-$version
+    if [ `which $candidate` ]
+    then
+      echo "Adding $candidate symlink"
+      sudo ln -s ../../bin/ccache $candidate
+      latestCandidate=$candidate
+    fi
   done
-done
 
-# Add symlinks
-cd /usr/lib/ccache
-for candidate in $candidates
-do
-  if [ `which $candidate` ]
+  if [ ! `which $name` ]
   then
-    echo "Adding $candidate symlink"
-    sudo ln -s ../../bin/ccache $candidate
+    echo "Adding $name symlink using $latestCandidate"
+    sudo ln -s /usr/bin/$latestCandidate /usr/bin/$name
   fi
+  echo "Adding $name symlink"
+  sudo ln -s ../../bin/ccache $name
 done
