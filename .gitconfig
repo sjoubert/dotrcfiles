@@ -2,6 +2,7 @@
   pager = less
 [color]
   ui = auto
+  grep = always
 [alias]
   st = status
   ci = commit
