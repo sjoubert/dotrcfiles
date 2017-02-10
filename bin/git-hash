@@ -7,4 +7,4 @@ then
 fi
 
 commitNumber=$(git rev-list --count $refspec)
-git log -1 --pretty=format:"%C(magenta)$commitNumber %C(cyan)$commitNumber.%h %C(yellow)%h %Cgreen%H%Creset" $refspec
+git log -1 --abbrev=8 --pretty=format:"%C(magenta)$commitNumber %C(cyan)$commitNumber.%h %C(yellow)%h %Cgreen%H%Creset" $refspec
