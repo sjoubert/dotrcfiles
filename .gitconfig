@@ -14,3 +14,5 @@
   rmdir = true
 [pull]
   rebase = true
+[user]
+  useConfigOnly = true
