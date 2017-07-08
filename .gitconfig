@@ -16,3 +16,6 @@
   rebase = true
 [user]
   useConfigOnly = true
+[merge]
+  stat = false
+
