@@ -4,4 +4,6 @@ if [ -r /usr/share/bash-completion/completions/ctest ]
 then
   . /usr/share/bash-completion/completions/ctest
   eval "`complete -p ctest | sed 's/ ctest$//'` ctestj"
+  eval "`complete -p ctest | sed 's/ ctest$//'` xctest"
+  eval "`complete -p ctest | sed 's/ ctest$//'` xctestj"
 fi
