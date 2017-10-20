@@ -14,7 +14,7 @@ do
     candidate=$name-$version
     if [ `which $candidate` ]
     then
-      echo "Adding $candidate symlink"
+      echo "Adding ccache $candidate symlink"
       sudo ln -s ../../bin/ccache $candidate
       latestCandidate=$candidate
     fi
@@ -22,9 +22,18 @@ do
 
   if [ ! `which $name` ]
   then
-    echo "Adding $name symlink using $latestCandidate"
+    echo "Adding system $name symlink using $latestCandidate"
     sudo ln -s /usr/bin/$latestCandidate /usr/bin/$name
+  else
+    echo "Keeping system $name symlink"
   fi
-  echo "Adding $name symlink"
-  sudo ln -s ../../bin/ccache $name
+
+  if [ ! -f $name ]
+  then
+    echo "Adding ccache $name symlink"
+    sudo ln -s ../../bin/ccache $name
+  else
+    systemName=$(readlink /usr/bin/clang | cut -d- -f2)
+    echo "Keeping ccache $name symlink to $systemName"
+  fi
 done
