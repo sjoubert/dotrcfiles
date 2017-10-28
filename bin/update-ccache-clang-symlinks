@@ -25,7 +25,8 @@ do
     echo "Adding system $name symlink using $latestCandidate"
     sudo ln -s /usr/bin/$latestCandidate /usr/bin/$name
   else
-    echo "Keeping system $name symlink"
+    systemName=$(readlink /usr/bin/clang | cut -d- -f2)
+    echo "Keeping system $name symlink to $systemName"
   fi
 
   if [ ! -f $name ]
@@ -33,7 +34,6 @@ do
     echo "Adding ccache $name symlink"
     sudo ln -s ../../bin/ccache $name
   else
-    systemName=$(readlink /usr/bin/clang | cut -d- -f2)
-    echo "Keeping ccache $name symlink to $systemName"
+    echo "Keeping ccache $name symlink"
   fi
 done
