@@ -34,3 +34,5 @@ unset useCcache useClang
 export EDITOR=vim
 export XML_CATALOGS_FILES=/etc/xml/catalog
 export NINJA_STATUS="[%p][%f/%t] "
+export CTEST_OUTPUT_ON_FAILURE=1
+
