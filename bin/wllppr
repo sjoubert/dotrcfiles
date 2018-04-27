@@ -23,7 +23,7 @@ function up()
 
   id=$(
     # Download random page
-    wget "http://wallpaperseveryday.com/mix" -O - | \
+    wget "https://wallpaperseveryday.com/mix" -O - | \
 
     # Keep download links
     grep "getimage.php" | \
