@@ -8,24 +8,8 @@ export PATH=/usr/lib/ccache:$PATH
 # Set CPU number
 export CPU_COUNT=`nproc`
 
-# Remove warnings emitted by clang(++) when used (invoked) by ccache
-# This a ccache limitation that should be fixed in a future version
-# C compiler
-useCcache=`which cc | grep ccache`
-useClang=`update-alternatives --query cc | grep "^Value" | grep clang`
-if [ -n "$useCcache" -a -n "$useClang" ]
-then
-  export CFLAGS="$CFLAGS -Qunused-arguments -fcolor-diagnostics"
-fi
-# C++ compiler
-useCcache=`which c++ | grep ccache`
-useClang=`update-alternatives --query c++ | grep "^Value" | grep clang`
-if [ -n "$useCcache" -a -n "$useClang" ]
-then
-  export CXXFLAGS="$CXXFLAGS -Qunused-arguments -fcolor-diagnostics"
-fi
-# Clean variables
-unset useCcache useClang
+export CFLAGS="$CFLAGS -fcolor-diagnostics"
+export CXXFLAGS="$CXXFLAGS -fcolor-diagnostics"
 
 # Use most as pager (especially for man display) if available
 [ `which most` ] && export PAGER=most
