@@ -45,4 +45,4 @@ alias ccmake='ccmake -G Ninja'
 alias gdb='gdb -q'
 alias git='LC_ALL=C git'
 alias dk='docker'
-
+alias dkc='docker-compose'
