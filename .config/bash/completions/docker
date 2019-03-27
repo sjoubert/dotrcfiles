@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ -r /usr/share/bash-completion/completions/docker ]
+then
+  . /usr/share/bash-completion/completions/docker
+  eval "`complete -p docker | sed 's/ docker$//'` dk"
+fi
+
+if [ -r /usr/share/bash-completion/completions/docker-compose ]
+then
+  . /usr/share/bash-completion/completions/docker-compose
+  eval "`complete -p docker-compose | sed 's/ docker-compose$//'` dkc"
+fi
