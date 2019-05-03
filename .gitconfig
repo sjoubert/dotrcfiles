@@ -3,6 +3,8 @@
 [color]
   ui = auto
   grep = always
+[color "diff"]
+  meta = yellow normal bold
 [alias]
   st = status
   ci = commit
@@ -18,4 +20,3 @@
   useConfigOnly = true
 [merge]
   stat = false
-
