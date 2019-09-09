@@ -1,5 +1,5 @@
 [core]
-  pager = less
+  pager = LESSCHARSET=utf-8 less
 [color]
   ui = auto
   grep = always
