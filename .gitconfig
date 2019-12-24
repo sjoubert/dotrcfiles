@@ -9,6 +9,7 @@
   st = status
   ci = commit
   co = checkout
+  si = switch
   diffw = diff --word-diff=color
 [grep]
   lineNumber = true
