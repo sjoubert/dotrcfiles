@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# User bin directory is not in the path by default on most system
+# User ~/.local/bin and ~/bin directories ar not in the path by default on most system
+export PATH=$HOME/.local/bin:$PATH
 export PATH=$HOME/bin:$PATH
 # Add ccache before other compiler so that it's the one taken
 export PATH=/usr/lib/ccache:$PATH
