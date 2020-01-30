@@ -1,0 +1,7 @@
+color author       blue    default bold
+color date         green   default
+color cursor       default default reverse
+color graph-commit magenta default
+
+set line-graphics = utf-8
+
