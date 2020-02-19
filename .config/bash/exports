@@ -19,6 +19,6 @@ export CXXFLAGS="$CXXFLAGS -fcolor-diagnostics"
 export EDITOR=vim
 export XML_CATALOGS_FILES=/etc/xml/catalog
 export NINJA_STATUS="[%p][%f/%t] "
+export CMAKE_GENERATOR="Ninja"
 export CTEST_OUTPUT_ON_FAILURE=1
 export CTEST_PROGRESS_OUTPUT=1
-
