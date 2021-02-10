@@ -40,6 +40,7 @@ then
   alias xctestj='xctest -j$(($CPU_COUNT - 1))'
 fi
 alias kd='kdevelop'
+alias code='code --goto'
 alias gdb='gdb -q'
 alias git='LC_ALL=C git'
 alias dk='docker'
