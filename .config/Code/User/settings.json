@@ -1,0 +1,38 @@
+{
+    "telemetry.enableCrashReporter": false,
+    "telemetry.enableTelemetry": false,
+    "editor.tabSize": 2,
+    "editor.renderWhitespace": "boundary",
+    "editor.wordWrapColumn": 120,
+    "C_Cpp.vcpkg.enabled": false,
+    "editor.minimap.showSlider": "always",
+    "editor.minimap.size": "fit",
+    "editor.renderControlCharacters": false,
+    "timeline.excludeSources": [],
+    "editor.fontSize": 12,
+    "workbench.editor.enablePreview": false,
+    "C_Cpp.updateChannel": "Insiders",
+    "editor.rulers": [
+        120
+    ],
+    "files.trimTrailingWhitespace": true,
+    "editor.trimAutoWhitespace": false,
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "java.semanticHighlighting.enabled": true,
+    "scm.alwaysShowActions": true,
+    "scm.alwaysShowRepositories": true,
+    "window.zoomLevel": 0,
+    "workbench.startupEditor": "newUntitledFile",
+    "cmake.ignoreKitEnv": true,
+    "cmake.configureOnOpen": false,
+    "workbench.list.openMode": "doubleClick",
+    "workbench.sideBar.location": "left",
+    "workbench.activityBar.visible": true,
+    "editor.suggest.showStatusBar": true,
+    "explorer.confirmDelete": false,
+}
