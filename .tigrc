@@ -3,5 +3,5 @@ color date         green   default
 color cursor       default default reverse
 color graph-commit magenta default
 
-set line-graphics = utf-8
+set line-graphics = default
 
