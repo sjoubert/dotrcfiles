@@ -53,6 +53,9 @@ else
   PS1="$PS1\$ " # Standard user
 fi
 
+# Starship prompt if available
+[ -x "$(which starship)" ] && eval "$(starship init bash)"
+
 # If this is an xterm set the window title
 case "$TERM" in
   xterm*|rxvt*) PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1" ;;
