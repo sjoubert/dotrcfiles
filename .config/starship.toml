@@ -1,0 +1,51 @@
+[cmake]
+disabled = true
+[gcloud]
+disabled = true
+
+[cmd_duration]
+min_time = 0
+show_milliseconds = true
+format = '[$duration]($style)'
+style = ''
+
+[directory]
+truncation_length = 256
+truncation_symbol = '…/'
+truncate_to_repo = false
+format = ':[$path]($style)[$read_only]($read_only_style) '
+style = 'bold blue'
+
+[git_branch]
+style = 'bold green'
+
+[git_commit]
+commit_hash_length = 8
+tag_disabled = false
+tag_symbol = ''
+style = 'bold green'
+
+[git_state]
+style = 'bold green'
+
+[git_status]
+ahead = '↑$count'
+behind = '↓$count'
+conflicted = '⚡$count'
+modified = '*'
+untracked = '…'
+diverged = '${ahead_count}Y$behind_count'
+style = 'bold green'
+
+[hostname]
+ssh_only = false
+format = '@[${hostname}]($style)'
+style = 'bold red'
+
+[status]
+map_symbol = true
+disabled = false
+
+[username]
+show_always = true
+format = '[$user]($style)'
