@@ -5,13 +5,13 @@
     "editor.renderWhitespace": "boundary",
     "editor.wordWrapColumn": 120,
     "C_Cpp.vcpkg.enabled": false,
+    "C_Cpp.clang_format_fallbackStyle": "none",
     "editor.minimap.showSlider": "always",
     "editor.minimap.size": "fit",
     "editor.renderControlCharacters": false,
     "timeline.excludeSources": [],
     "editor.fontSize": 12,
     "workbench.editor.enablePreview": false,
-    "C_Cpp.updateChannel": "Insiders",
     "editor.rulers": [
         120
     ],
