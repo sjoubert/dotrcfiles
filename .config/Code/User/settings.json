@@ -26,7 +26,6 @@
     "java.semanticHighlighting.enabled": true,
     "scm.alwaysShowActions": true,
     "scm.alwaysShowRepositories": true,
-    "window.zoomLevel": 0,
     "workbench.startupEditor": "none",
     "workbench.tree.renderIndentGuides": "always",
     "explorer.autoReveal": "focusNoScroll",
@@ -38,4 +37,24 @@
     "workbench.activityBar.visible": true,
     "editor.suggest.showStatusBar": true,
     "explorer.confirmDelete": false,
+    "files.associations": {
+        "*.cmake.in": "cmake",
+        "*.cmake.tpl": "cmake",
+        ".clang-tidy": "yaml"
+    },
+    "azure-event-hub-explorer.eventHubConnectionString": "Endpoint=sb://phoenixdev.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=BFn9nZjiFUfLusdylV2NEZyQsRYmH5DBwlwmImzP1ns=",
+    "azure-event-hub-explorer.eventHubEntityName": "o-gzypnd27g7-demobrewery",
+    "codetour.showMarkers": false,
+    "redhat.telemetry.enabled": false,
+    "sonarlint.disableTelemetry": true,
+    "notebook.cellToolbarLocation": {
+        "default": "right",
+        "jupyter-notebook": "left"
+    },
+    "azure-event-hub-explorer.showVerboseMessage": true,
+    "terminal.integrated.fontFamily": "Hack",
+    "C_Cpp.codeAnalysis.runAutomatically": false,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "workbench.localHistory.enabled": false,
+    "explorer.confirmDragAndDrop": false,
 }

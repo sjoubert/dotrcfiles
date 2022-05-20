@@ -22,3 +22,5 @@
   useConfigOnly = true
 [merge]
   stat = false
+[absorb]
+  maxStack = 20
