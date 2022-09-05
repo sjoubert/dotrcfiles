@@ -15,7 +15,6 @@
     "editor.rulers": [
         120
     ],
-    "timeline.excludeSources": [],
     "files.exclude": {
         "**/.classpath": true,
         "**/.project": true,
@@ -41,4 +40,6 @@
     "workbench.localHistory.enabled": false,
     "terminal.integrated.fontFamily": "Hack",
     "diffEditor.ignoreTrimWhitespace": false,
+    "redhat.telemetry.enabled": false,
+    "gitblame.statusBarMessageClickAction": "Open tool URL",
 }

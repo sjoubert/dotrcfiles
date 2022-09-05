@@ -9,9 +9,6 @@ export PATH=/usr/lib/ccache:$PATH
 # Set CPU number
 export CPU_COUNT=`nproc`
 
-export CFLAGS="$CFLAGS -fcolor-diagnostics"
-export CXXFLAGS="$CXXFLAGS -fcolor-diagnostics"
-
 # Use most as pager (especially for man display) if available
 [ `which most` ] && export PAGER=most
 
@@ -20,5 +17,6 @@ export EDITOR=vim
 export XML_CATALOGS_FILES=/etc/xml/catalog
 export NINJA_STATUS="[%p][%f/%t] "
 export CMAKE_GENERATOR="Ninja"
+export CMAKE_COLOR_DIAGNOSTICS=ON
 export CTEST_OUTPUT_ON_FAILURE=1
 export CTEST_PROGRESS_OUTPUT=1

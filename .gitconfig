@@ -1,8 +1,5 @@
 [core]
   pager = LESSCHARSET=utf-8 less
-[color]
-  ui = auto
-  grep = always
 [color "diff"]
   meta = yellow normal bold
 [alias]
@@ -24,3 +21,5 @@
   stat = false
 [absorb]
   maxStack = 20
+[push]
+  default = upstream
