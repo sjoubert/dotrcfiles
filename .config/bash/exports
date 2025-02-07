@@ -16,8 +16,10 @@ export CPU_COUNT=`nproc`
 # Misc
 export EDITOR=vim
 export XML_CATALOGS_FILES=/etc/xml/catalog
-export NINJA_STATUS="[%p][%f/%t] "
+export NINJA_STATUS="[%p][%s/%t] "
 export CMAKE_GENERATOR="Ninja"
 export CMAKE_COLOR_DIAGNOSTICS=ON
 export CTEST_OUTPUT_ON_FAILURE=1
 export CTEST_PROGRESS_OUTPUT=1
+export RSH_RETRY=0
+

@@ -8,13 +8,14 @@
   co = checkout
   si = switch
   diffw = diff --word-diff=color
-  gerp = grep
 [grep]
   lineNumber = true
 [svn]
   rmdir = true
 [pull]
   rebase = true
+[fetch]
+  parallel = 0
 [user]
   useConfigOnly = true
 [merge]
@@ -23,3 +24,7 @@
   maxStack = 20
 [push]
   default = upstream
+[help]
+  autocorrect = prompt
+[advice]
+  detachedHead = false
