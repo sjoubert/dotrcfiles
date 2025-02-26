@@ -8,6 +8,7 @@
   co = checkout
   si = switch
   diffw = diff --word-diff=color
+  pullall = pull --all --prune --tags --force
 [grep]
   lineNumber = true
 [svn]
